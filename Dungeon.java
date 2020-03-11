@@ -6,7 +6,7 @@ import java.util.Random;
 public class Dungeon
 {
 	private char[][] dungeon;
-	private Room[][] rooms;
+	public Room[][] rooms;
 	private int dim; // Dimensions of room
 	
 	public Dungeon(int x)
@@ -80,14 +80,24 @@ public class Dungeon
 				next = false;
 				int xrand = r.nextInt(x);
 				int yrand = r.nextInt(x);
-				System.out.println(xrand + " " + yrand);
+				
 				if(takenSpots.indexOf(xrand + "," + yrand) < 0)
 				{
-					rooms[xrand][yrand].params = rooms[xrand][yrand].params + "," + s;
+					rooms[xrand][yrand].essentials = rooms[xrand][yrand].essentials + "," + s;
 					next = true;
 				}
 			} while(!next);
 		}
+		
+		// Populates rooms with non-essential objects and monsters
+		for(int i=0; i<x; i++)
+			for(int j=0; j<x; j++)
+			{
+				if(rooms[i][j].essentials.length() < 1)
+					rooms[i][j].setNonEssentials();
+				if(rooms[i][j].nonessentials.length() < 1) // Checks after non-essentials populated
+					rooms[i][j].setMonster();
+			}
 		
 		return rooms;
 	}
