@@ -1,13 +1,20 @@
 package dungeon;
 
+import java.util.Scanner;
+
 public class TEMP_Tester
 {
 	public static void main(String[] args)
 	{
-		Dungeon d = new Dungeon(5);
-		//Room r= new Room("N,E,S,W");
-		for(int i=0; i<5; i++)
-			for(int j=0; j<5; j++)
-				System.out.println((i+j) + ") " + d.rooms[i][j].essentials + " | " + d.rooms[i][j].nonessentials + " | " + d.rooms[i][j].monster);
+		GameSetup game = new GameSetup();
+		Scanner kb = new Scanner(System.in);
+		do
+		{
+			boolean moved = false;
+			while(!moved)
+				moved = game.dungeon.move();
+			game.hero.update(game.dungeon);
+			System.out.println(game.dungeon.currentRoom());
+		} while(true); //FIX this eventually
 	}
 }

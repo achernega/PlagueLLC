@@ -2,12 +2,14 @@ package dungeon;
 
 import java.util.ArrayList;
 import java.util.Random;
+import java.util.Scanner;
 
 public class Dungeon
 {
 	private char[][] dungeon;
 	public Room[][] rooms;
 	private int dim; // Dimensions of room
+	public int xpos, ypos; // Position of player
 	
 	public Dungeon(int x)
 	{
@@ -57,7 +59,7 @@ public class Dungeon
 			rooms[i][0] = new Room("N,E,S"); // Western rooms, non-corner
 			rooms[i][x-1] = new Room("N,S,W"); // Eastern rooms, non-corner
 			rooms[0][i] = new Room("E,S,W"); // Northern rooms, non-corner
-			rooms[x-1][i] = new Room("N,E,W"); // Sourthern rooms, non-corner
+			rooms[x-1][i] = new Room("N,E,W"); // Southern rooms, non-corner
 		}
 		rooms[0][0] = new Room("E,S"); // NW corner
 		rooms[0][x-1] = new Room("W,S"); // NE corner
@@ -85,6 +87,13 @@ public class Dungeon
 				{
 					rooms[xrand][yrand].essentials = rooms[xrand][yrand].essentials + "," + s;
 					next = true;
+					
+					// This triggers when setting entrance to set initial player position
+					if(s.equals("I"))
+					{
+						xpos = xrand;
+						ypos = yrand;
+					}
 				}
 			} while(!next);
 		}
@@ -94,12 +103,66 @@ public class Dungeon
 			for(int j=0; j<x; j++)
 			{
 				if(rooms[i][j].essentials.length() < 1)
+				{
 					rooms[i][j].setNonEssentials();
-				if(rooms[i][j].nonessentials.length() < 1) // Checks after non-essentials populated
-					rooms[i][j].setMonster();
+					//FIX: change monster generation to be random encounter!
+					if(rooms[i][j].nonessentials.length() < 1) // Checks after non-essentials populated
+						rooms[i][j].setMonster();
+				}
 			}
 		
 		return rooms;
+	}
+	
+	public boolean move()
+	{
+		Scanner kb = new Scanner(System.in);
+		String possibleDir = "wasd";
+		String dir;
+		boolean changeXPos = false;
+		
+		do
+		{
+			System.out.print("Direction to move:");
+			dir = kb.nextLine();
+			if(possibleDir.indexOf(dir) < 0)
+				System.out.println("Choose valid direction!");
+		} while(possibleDir.indexOf(dir) < 0);
+		
+		int pendingCoordChange = -1;
+		
+		if(possibleDir.indexOf(dir) == 0)
+			pendingCoordChange = ypos - 1;
+		else if(possibleDir.indexOf(dir) == 2)
+			pendingCoordChange = ypos + 1;
+		else if(possibleDir.indexOf(dir) == 1)
+		{
+			pendingCoordChange = xpos - 1;
+			changeXPos = true;
+		}
+		else if(possibleDir.indexOf(dir) == 3)
+		{
+			pendingCoordChange = xpos + 1;
+			changeXPos = true;
+		}
+		
+		if(pendingCoordChange < 0 || pendingCoordChange >= dim)
+		{
+			System.out.println("You hit a wall!");
+			return false;
+		}
+		
+		if(changeXPos)
+			xpos = pendingCoordChange;
+		else
+			ypos = pendingCoordChange;
+		
+		return true;
+	}
+	
+	public Room currentRoom()
+	{
+		return rooms[ypos][xpos];
 	}
 	
 	public String toString()

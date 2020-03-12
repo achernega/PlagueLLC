@@ -7,11 +7,25 @@ public class Room
 	public String doorLocations;
 	public String essentials = ""; // Contains essentials like pillars, etc.
 	public String nonessentials = ""; // Contains non-essentials, like items, etc.
+	public String[][] roomArray;
 	public boolean monster;
 	
 	public Room(String doorLoc)
 	{
 		doorLocations = doorLoc;
+		
+		String[][] room = new String[3][3];
+		room[0][0] = "*"; room[0][2] = "*\n";
+		room[2][0] = "*"; room[2][2] = "*\n";
+		
+		room[0][1] = doorLocations.indexOf("N") < 0 ? "*" : "-";
+		room[1][2] = doorLocations.indexOf("E") < 0 ? "*\n" : "|\n";
+		room[2][1] = doorLocations.indexOf("S") < 0 ? "*" : "-";
+		room[1][0] = doorLocations.indexOf("W") < 0 ? "*" : "|";
+		
+		room[1][1] = "E";
+		
+		roomArray = room;
 	}
 	
 	public void setNonEssentials()
@@ -34,22 +48,11 @@ public class Room
 	}
 	
 	public String toString()
-	{
-		String[][] room = new String[3][3];
-		room[0][0] = "*"; room[0][2] = "*\n";
-		room[2][0] = "*"; room[2][2] = "*\n";
-		
-		room[0][1] = doorLocations.indexOf("N") < 0 ? "*" : "-";
-		room[1][2] = doorLocations.indexOf("E") < 0 ? "*\n" : "|\n";
-		room[2][1] = doorLocations.indexOf("S") < 0 ? "*" : "-";
-		room[1][0] = doorLocations.indexOf("W") < 0 ? "*" : "|";
-		
-		room[1][1] = "X";
-		
+	{	
 		String roomToString = "";
 		int j=3;
 		for(int i=0; i<9; i++)
-			roomToString += room[i/j][i%3]; // Saved one whole line of code with this method of iteration
+			roomToString += roomArray[i/j][i%3]; // Saved one whole line of code with this method of iteration
 		
 		return roomToString;
 	}
