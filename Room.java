@@ -44,7 +44,7 @@ public class Room
 	{
 		Random r = new Random();
 		int chance = r.nextInt(10);
-		monster = chance == 5;
+		monster = chance == 5 || chance == 6;
 	}
 	
 	public String toString()

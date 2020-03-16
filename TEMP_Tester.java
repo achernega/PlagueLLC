@@ -6,6 +6,19 @@ public class TEMP_Tester
 {
 	public static void main(String[] args)
 	{
+		boolean playAgain = false;
+		Scanner kb = new Scanner(System.in);
+		do
+		{
+			playGame();
+			System.out.println("Play again? y/n");
+			String choice = kb.nextLine();
+			playAgain = choice.toLowerCase().equals("y");
+		} while(playAgain);
+	}
+	
+	private static void playGame()
+	{
 		GameSetup game = new GameSetup();
 		Scanner kb = new Scanner(System.in);
 		do
@@ -14,7 +27,6 @@ public class TEMP_Tester
 			while(!moved)
 				moved = game.dungeon.move();
 			game.hero.update(game.dungeon);
-			System.out.println(game.dungeon.currentRoom());
-		} while(true); //FIX this eventually
+		} while(game.hero.isAlive());
 	}
 }

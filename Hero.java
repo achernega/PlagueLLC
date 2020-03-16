@@ -27,6 +27,7 @@ public abstract class Hero extends DungeonCharacter
 		
 		if(ess.length() > 0)
 		{
+			boolean foundPillar = false, foundExit = false;
 			String[] essArr = ess.split(",");
 			{
 				for(String s : essArr)
@@ -37,43 +38,78 @@ public abstract class Hero extends DungeonCharacter
 						numPillars++;
 						room.essentials = "";
 						room.roomArray[1][1] = "A";
+						foundPillar = true;
+					}
+					else if(s.equals("I"))
+					{
+						System.out.println("Found entrance, no monsters can get to you here.");
+						room.roomArray[1][1] = "I";
+					}
+					else if(s.equals("O"))
+					{
+						room.roomArray[1][1] = "O";
+						foundExit = true;
+						System.out.println(dungeon.currentRoom());
+						System.out.println(getName() + " found exit, want to quit?");
+						triggerEnd();
 					}
 				}
 			}
+			if(!foundExit)
+				System.out.println(dungeon.currentRoom());
+			if(foundPillar)
+				room.roomArray[1][1] = "E";
 		}
 		else if(ness.length() > 0)
 		{
 			boolean pitExists = false;
 			String[] nessArr = ness.split(",");
-			if(nessArr.length > 2)
-				room.roomArray[1][1] = "M";
+			boolean multipleItems = nessArr.length > 2;
 			
 			for(String s : nessArr)
 			{
 				if(s.equals("H"))
 				{
 					System.out.println(getName() + " found a healing potion!");
+					if(!multipleItems)
+						room.roomArray[1][1] = "H";
 					numHealingPots++;
 				}
 				if(s.equals("V"))
 				{
 					System.out.println(getName() + " found a vision potion!");
+					if(!multipleItems)
+						room.roomArray[1][1] = "V";
 					numVisionPots++;
 				}
 				if(s.equals("P"))
 				{
 					System.out.println(getName() + " fell into a pit!");
 					Random r = new Random();
-					subtractHitPoints(r.nextInt(20));
+					subtractHitPoints(r.nextInt(40));
 					pitExists = true;
+					if(!multipleItems)
+						room.roomArray[1][1] = "P";
 				}
 			}
+			if(multipleItems)
+				room.roomArray[1][1] = "M";
+			
+			System.out.println(dungeon.currentRoom());
+			
 			room.nonessentials = pitExists ? "P" : "";
+			room.roomArray[1][1] = pitExists ? "P" : "E";
 		}
 		else if(room.monster)
 		{
+			room.roomArray[1][1] = "X";
+			System.out.println(dungeon.currentRoom());
 			// battle(); // FIX !!!!!!!!!!
+			room.monster = false;
+			room.roomArray[1][1] = "E";
 		}
+		else
+			System.out.println(dungeon.currentRoom());
 	}
 	
 	public void readName()
@@ -113,6 +149,11 @@ public abstract class Hero extends DungeonCharacter
 		System.out.println("Number of turns this round is: " + numTurns);
 
 	}//end battleChoices
+	
+	public void triggerEnd()
+	{
+		// FIX: add end code!
+	}
 
 	public int getNumTurns()
 	{

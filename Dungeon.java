@@ -64,7 +64,7 @@ public class Dungeon
 		rooms[0][0] = new Room("E,S"); // NW corner
 		rooms[0][x-1] = new Room("W,S"); // NE corner
 		rooms[x-1][x-1] = new Room("N,W"); // SE corner
-		rooms[x-1][0] = new Room("N,W"); // SW corner
+		rooms[x-1][0] = new Room("N,E"); // SW corner
 		
 		for(int i=1; i<x-1; i++)
 			for(int j=1; j<x-1; j++)
@@ -105,7 +105,6 @@ public class Dungeon
 				if(rooms[i][j].essentials.length() < 1)
 				{
 					rooms[i][j].setNonEssentials();
-					//FIX: change monster generation to be random encounter!
 					if(rooms[i][j].nonessentials.length() < 1) // Checks after non-essentials populated
 						rooms[i][j].setMonster();
 				}
@@ -123,10 +122,10 @@ public class Dungeon
 		
 		do
 		{
-			System.out.print("Direction to move:");
+			System.out.print("Direction to move or potion to use:");
 			dir = kb.nextLine();
 			if(possibleDir.indexOf(dir) < 0)
-				System.out.println("Choose valid direction!");
+				System.out.println("Choose valid direction or potion!");
 		} while(possibleDir.indexOf(dir) < 0);
 		
 		int pendingCoordChange = -1;
@@ -149,6 +148,7 @@ public class Dungeon
 		if(pendingCoordChange < 0 || pendingCoordChange >= dim)
 		{
 			System.out.println("You hit a wall!");
+			System.out.println(currentRoom());
 			return false;
 		}
 		
@@ -156,7 +156,7 @@ public class Dungeon
 			xpos = pendingCoordChange;
 		else
 			ypos = pendingCoordChange;
-		
+	
 		return true;
 	}
 	
