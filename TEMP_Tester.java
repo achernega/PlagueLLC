@@ -6,15 +6,52 @@ public class TEMP_Tester
 {
 	public static void main(String[] args)
 	{
-		GameSetup game = new GameSetup();
+		boolean playAgain = false;
 		Scanner kb = new Scanner(System.in);
 		do
 		{
+			playGame();
+			System.out.println("Play again? y/n");
+			String choice = kb.nextLine();
+			playAgain = choice.toLowerCase().equals("y");
+		} while(playAgain);
+	}
+	
+	private static void playGame()
+	{
+		GameSetup game = new GameSetup();
+		System.out.println(game.dungeon.currentRoom());
+		Scanner kb = new Scanner(System.in);
+		do
+		{		
 			boolean moved = false;
 			while(!moved)
-				moved = game.dungeon.move();
+			{
+				if(game.dungeon.menuRequest)
+				{
+					game.menu();
+					game.dungeon.menuRequest = false;
+				}
+				else
+					moved = game.dungeon.move();
+			}
 			game.hero.update(game.dungeon);
-			System.out.println(game.dungeon.currentRoom());
-		} while(true); //FIX this eventually
+			if(game.dungeon.currentRoom().monster)
+			{
+				System.out.println("You have encountered a desease!\nWant to battle? y/n");
+				String fleeChoice = kb.nextLine();
+				if(fleeChoice.toLowerCase().equals("n"))
+					System.out.println(game.hero.getName() + " fleed the battle!");
+				else
+				{
+					game.battle();
+					game.dungeon.currentRoom().monster = false;
+					System.out.println("Monster dropped a healing and vision potions!");
+					game.hero.numHealingPots++;
+					game.hero.numVisionPots++;
+					System.out.println(game.dungeon.currentRoom());
+				}
+			}
+		} while(game.hero.isAlive());
 	}
 }

@@ -6,7 +6,7 @@ import java.util.Scanner;
 public abstract class Hero extends DungeonCharacter
 {
 	private double chanceToBlock;
-	private int numTurns, numHealingPots = 0, numVisionPots = 0, numPillars = 0;
+	public int numTurns, numHealingPots = 0, numVisionPots = 0, numPillars = 0;
 	private SpecialPower specialPower;
 
 	public Hero(String name, int hitPoints, int attackSpeed,
@@ -15,7 +15,6 @@ public abstract class Hero extends DungeonCharacter
 	{
 		super(name, hitPoints, attackSpeed, chanceToHit, damageMin, damageMax);
 		this.chanceToBlock = chanceToBlock;
-		readName();
 	}
 
 	public void update(Dungeon dungeon)
@@ -27,66 +26,129 @@ public abstract class Hero extends DungeonCharacter
 		
 		if(ess.length() > 0)
 		{
+			boolean foundPillar = false, foundExit = false;
 			String[] essArr = ess.split(",");
 			{
 				for(String s : essArr)
 				{
 					if(s.equals("P1") || s.equals("P2") || s.equals("P3") || s.equals("P4"))
 					{
-						System.out.println(getName() + " found a Pillar of OO!");
+						System.out.println(getName() + " found a First Aid Kit of OO!");
 						numPillars++;
+						if(numPillars >= 4)
+						{
+							System.out.println("Congratulations! You have found every First Aid Kid of OO!");
+							triggerEnd();
+						}
 						room.essentials = "";
-						room.roomArray[1][1] = "A";
+						room.roomArray[1][1] = "+";
+						foundPillar = true;
+					}
+					else if(s.equals("I"))
+					{
+						System.out.println("Found entrance, no diseases can get to you here.");
+						room.roomArray[1][1] = "I";
+					}
+					else if(s.equals("O"))
+					{
+						room.roomArray[1][1] = "O";
+						foundExit = true;
+						System.out.println(dungeon.currentRoom());
+						Scanner kb = new Scanner(System.in);
+						System.out.println(getName() + " found exit, want to quit? y/n");
+						String ans = kb.nextLine();
+						if(ans.toLowerCase().equals("y"))
+							triggerEnd();
 					}
 				}
 			}
+			if(!foundExit)
+				System.out.println(dungeon.currentRoom());
+			if(foundPillar)
+				room.roomArray[1][1] = "E";
 		}
 		else if(ness.length() > 0)
 		{
 			boolean pitExists = false;
 			String[] nessArr = ness.split(",");
-			if(nessArr.length > 2)
-				room.roomArray[1][1] = "M";
+			boolean multipleItems = nessArr.length > 2;
 			
 			for(String s : nessArr)
 			{
 				if(s.equals("H"))
 				{
 					System.out.println(getName() + " found a healing potion!");
+					if(!multipleItems)
+						room.roomArray[1][1] = "H";
 					numHealingPots++;
 				}
 				if(s.equals("V"))
 				{
 					System.out.println(getName() + " found a vision potion!");
+					if(!multipleItems)
+						room.roomArray[1][1] = "V";
 					numVisionPots++;
 				}
 				if(s.equals("P"))
 				{
 					System.out.println(getName() + " fell into a pit!");
 					Random r = new Random();
-					subtractHitPoints(r.nextInt(20));
+					subtractHitPoints(r.nextInt(40));
 					pitExists = true;
+					if(!multipleItems)
+						room.roomArray[1][1] = "P";
 				}
 			}
+			if(multipleItems)
+				room.roomArray[1][1] = "M";
+			
+			System.out.println(dungeon.currentRoom());
+			
 			room.nonessentials = pitExists ? "P" : "";
+			room.roomArray[1][1] = pitExists ? "P" : "E";
 		}
 		else if(room.monster)
 		{
-			// battle(); // FIX !!!!!!!!!!
+			room.roomArray[1][1] = "X";
+			System.out.println(dungeon.currentRoom());
+			room.roomArray[1][1] = "E";
 		}
+		else
+			System.out.println(dungeon.currentRoom());
 	}
-	
-	public void readName()
-	{
-		System.out.println("Enter character name: ");
-		Scanner kb = new Scanner(System.in);
-		String nam = kb.nextLine();
-		setName(nam);
-	}//end readName method
 
 	public void usePower()
 	{
 		specialPower.usePower();
+	}
+	
+	public void useHealingPot()
+	{
+		if(numHealingPots > 0)
+		{
+			Random r = new Random();
+			System.out.println(getName() + " used a healing potion!");
+			int ran = r.nextInt(40);
+			addHitPoints(ran);
+			numHealingPots--;
+			System.out.println(getName() + " healed " + ran + " points of health!"
+					+ "\nCurrent HP: " + getHitPoints() + " | " + "Number of Healing Potions: " + numHealingPots);
+		}
+		else
+			System.out.println("No healing potions left!");
+	}
+	
+	public void useVisionPot()
+	{
+		if(numVisionPots > 0)
+		{
+			Random r = new Random();
+			System.out.println(getName() + " used a vision potion!");
+			// FIX: put in vision potion implementation
+			numVisionPots--;
+		}
+		else
+			System.out.println("No vision potions left!");
 	}
 
 	public boolean defend()
@@ -113,6 +175,12 @@ public abstract class Hero extends DungeonCharacter
 		System.out.println("Number of turns this round is: " + numTurns);
 
 	}//end battleChoices
+	
+	public void triggerEnd()
+	{
+		System.exit(0);
+		// FIX: add end code!
+	}
 
 	public int getNumTurns()
 	{
@@ -132,6 +200,11 @@ public abstract class Hero extends DungeonCharacter
 	public void setSpecialPower(SpecialPower specialPower)
 	{
 		this.specialPower = specialPower;
+	}
+	
+	public String toString() {
+		return this.getName() + " has " + this.getHitPoints() + " hit points, " + numHealingPots + " healing potions, " 
+				+ numVisionPots + " vision potions, and " + numPillars + " pillars found.";
 	}
 
 }//end Hero class

@@ -10,6 +10,7 @@ public class Dungeon
 	public Room[][] rooms;
 	private int dim; // Dimensions of room
 	public int xpos, ypos; // Position of player
+	boolean menuRequest = false;
 	
 	public Dungeon(int x)
 	{
@@ -64,7 +65,7 @@ public class Dungeon
 		rooms[0][0] = new Room("E,S"); // NW corner
 		rooms[0][x-1] = new Room("W,S"); // NE corner
 		rooms[x-1][x-1] = new Room("N,W"); // SE corner
-		rooms[x-1][0] = new Room("N,W"); // SW corner
+		rooms[x-1][0] = new Room("N,E"); // SW corner
 		
 		for(int i=1; i<x-1; i++)
 			for(int j=1; j<x-1; j++)
@@ -83,9 +84,10 @@ public class Dungeon
 				int xrand = r.nextInt(x);
 				int yrand = r.nextInt(x);
 				
-				if(takenSpots.indexOf(xrand + "," + yrand) < 0)
+				if(takenSpots.indexOf(yrand + "," + xrand) < 0)
 				{
-					rooms[xrand][yrand].essentials = rooms[xrand][yrand].essentials + "," + s;
+					rooms[yrand][xrand].essentials = rooms[yrand][xrand].essentials + "," + s;
+					takenSpots.add(yrand + "," + xrand);
 					next = true;
 					
 					// This triggers when setting entrance to set initial player position
@@ -105,7 +107,6 @@ public class Dungeon
 				if(rooms[i][j].essentials.length() < 1)
 				{
 					rooms[i][j].setNonEssentials();
-					//FIX: change monster generation to be random encounter!
 					if(rooms[i][j].nonessentials.length() < 1) // Checks after non-essentials populated
 						rooms[i][j].setMonster();
 				}
@@ -117,13 +118,13 @@ public class Dungeon
 	public boolean move()
 	{
 		Scanner kb = new Scanner(System.in);
-		String possibleDir = "wasd";
+		String possibleDir = "wasde";
 		String dir;
 		boolean changeXPos = false;
 		
 		do
 		{
-			System.out.print("Direction to move:");
+			System.out.print("WASD to move; E for menu:");
 			dir = kb.nextLine();
 			if(possibleDir.indexOf(dir) < 0)
 				System.out.println("Choose valid direction!");
@@ -145,10 +146,16 @@ public class Dungeon
 			pendingCoordChange = xpos + 1;
 			changeXPos = true;
 		}
+		else if(possibleDir.indexOf(dir) == 4)
+		{	
+			menuRequest = true;
+			return false;
+		}
 		
 		if(pendingCoordChange < 0 || pendingCoordChange >= dim)
 		{
 			System.out.println("You hit a wall!");
+			System.out.println(currentRoom());
 			return false;
 		}
 		
@@ -156,7 +163,7 @@ public class Dungeon
 			xpos = pendingCoordChange;
 		else
 			ypos = pendingCoordChange;
-		
+	
 		return true;
 	}
 	
