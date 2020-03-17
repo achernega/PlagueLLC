@@ -1,5 +1,5 @@
-# PokermanDungeon
-Rogue-style randomly-generated dungeon crawler a la Pokemon Mystery Dungeon, except a billion times worse.
+# PlagueLLC
+Rogue-style randomly-generated dungeon crawler with a viral twist.
 
 Contributions:
 1. Room class design //achernega
