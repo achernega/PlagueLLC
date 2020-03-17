@@ -6,7 +6,7 @@ import java.util.Scanner;
 public abstract class Hero extends DungeonCharacter
 {
 	private double chanceToBlock;
-	private int numTurns, numHealingPots = 0, numVisionPots = 0, numPillars = 0;
+	public int numTurns, numHealingPots = 0, numVisionPots = 0, numPillars = 0;
 	private SpecialPower specialPower;
 
 	public Hero(String name, int hitPoints, int attackSpeed,
@@ -36,6 +36,11 @@ public abstract class Hero extends DungeonCharacter
 					{
 						System.out.println(getName() + " found a First Aid Kit of OO!");
 						numPillars++;
+						if(numPillars >= 4)
+						{
+							System.out.println("Congratulations! You have found every First Aid Kid of OO!");
+							triggerEnd();
+						}
 						room.essentials = "";
 						room.roomArray[1][1] = "+";
 						foundPillar = true;
@@ -104,8 +109,6 @@ public abstract class Hero extends DungeonCharacter
 		{
 			room.roomArray[1][1] = "X";
 			System.out.println(dungeon.currentRoom());
-			// battle(); // FIX !!!!!!!!!!
-			room.monster = false;
 			room.roomArray[1][1] = "E";
 		}
 		else
