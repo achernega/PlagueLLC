@@ -35,4 +35,40 @@ public class GameSetup
 			return hf.createHero("Thief");
 		}
 	}
+	
+	public void menu()
+	{
+		Scanner kb = new Scanner(System.in);
+		int choice = 0;
+		do
+		{
+			System.out.println("--- Player Menu ---\n"
+					+ "Choose option:\n"
+					+ "1) See All Stats\n"
+					+ "2) Use Healing Potion\n"
+					+ "3) Use Vision Potion\n"
+					+ "4) Exit Menu\n"
+					+ "0) Quit Game");
+			do
+			{
+				choice = kb.nextInt();
+				if(choice < 0 || choice > 4)
+					System.out.println("Chooce valid option!");
+			} while(choice < 0 || choice > 4);
+			
+			switch(choice)
+			{
+				case 1 : System.out.println(hero); break;
+				
+				case 2 : hero.useHealingPot(); break;
+				
+				case 3 : hero.useVisionPot(); break;
+				
+				case 4 : break;
+				
+				case 0: hero.triggerEnd(); break;
+			}
+			
+		} while(choice != 4);
+	}
 }

@@ -34,15 +34,15 @@ public abstract class Hero extends DungeonCharacter
 				{
 					if(s.equals("P1") || s.equals("P2") || s.equals("P3") || s.equals("P4"))
 					{
-						System.out.println(getName() + " found a Pillar of OO!");
+						System.out.println(getName() + " found a First Aid Kit of OO!");
 						numPillars++;
 						room.essentials = "";
-						room.roomArray[1][1] = "A";
+						room.roomArray[1][1] = "+";
 						foundPillar = true;
 					}
 					else if(s.equals("I"))
 					{
-						System.out.println("Found entrance, no monsters can get to you here.");
+						System.out.println("Found entrance, no diseases can get to you here.");
 						room.roomArray[1][1] = "I";
 					}
 					else if(s.equals("O"))
@@ -124,6 +124,35 @@ public abstract class Hero extends DungeonCharacter
 	{
 		specialPower.usePower();
 	}
+	
+	public void useHealingPot()
+	{
+		if(numHealingPots > 0)
+		{
+			Random r = new Random();
+			System.out.println(getName() + " used a healing potion!");
+			int ran = r.nextInt(40);
+			addHitPoints(ran);
+			numHealingPots--;
+			System.out.println(getName() + " healed " + ran + " points of health!"
+					+ "\nCurrent HP: " + getHitPoints() + " | " + "Number of Healing Potions: " + numHealingPots);
+		}
+		else
+			System.out.println("No healing potions left!");
+	}
+	
+	public void useVisionPot()
+	{
+		if(numVisionPots > 0)
+		{
+			Random r = new Random();
+			System.out.println(getName() + " used a vision potion!");
+			// FIX: put in vision potion implementation
+			numVisionPots--;
+		}
+		else
+			System.out.println("No vision potions left!");
+	}
 
 	public boolean defend()
 	{
@@ -173,6 +202,11 @@ public abstract class Hero extends DungeonCharacter
 	public void setSpecialPower(SpecialPower specialPower)
 	{
 		this.specialPower = specialPower;
+	}
+	
+	public String toString() {
+		return this.getName() + " has " + this.getHitPoints() + " hit points, " + numHealingPots + " healing potions, " 
+				+ numVisionPots + " vision potions, and " + numPillars + " pillars found.";
 	}
 
 }//end Hero class

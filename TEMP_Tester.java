@@ -22,10 +22,18 @@ public class TEMP_Tester
 		GameSetup game = new GameSetup();
 		Scanner kb = new Scanner(System.in);
 		do
-		{
+		{			
 			boolean moved = false;
 			while(!moved)
-				moved = game.dungeon.move();
+			{
+				if(game.dungeon.menuRequest)
+				{
+					game.menu();
+					game.dungeon.menuRequest = false;
+				}
+				else
+					moved = game.dungeon.move();
+			}
 			game.hero.update(game.dungeon);
 		} while(game.hero.isAlive());
 	}

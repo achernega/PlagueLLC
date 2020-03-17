@@ -10,6 +10,7 @@ public class Dungeon
 	public Room[][] rooms;
 	private int dim; // Dimensions of room
 	public int xpos, ypos; // Position of player
+	boolean menuRequest = false;
 	
 	public Dungeon(int x)
 	{
@@ -83,9 +84,10 @@ public class Dungeon
 				int xrand = r.nextInt(x);
 				int yrand = r.nextInt(x);
 				
-				if(takenSpots.indexOf(xrand + "," + yrand) < 0)
+				if(takenSpots.indexOf(yrand + "," + xrand) < 0)
 				{
-					rooms[xrand][yrand].essentials = rooms[xrand][yrand].essentials + "," + s;
+					rooms[yrand][xrand].essentials = rooms[yrand][xrand].essentials + "," + s;
+					takenSpots.add(yrand + "," + xrand);
 					next = true;
 					
 					// This triggers when setting entrance to set initial player position
@@ -116,16 +118,16 @@ public class Dungeon
 	public boolean move()
 	{
 		Scanner kb = new Scanner(System.in);
-		String possibleDir = "wasd";
+		String possibleDir = "wasde";
 		String dir;
 		boolean changeXPos = false;
 		
 		do
 		{
-			System.out.print("Direction to move or potion to use:");
+			System.out.print("WASD to move; E for menu:");
 			dir = kb.nextLine();
 			if(possibleDir.indexOf(dir) < 0)
-				System.out.println("Choose valid direction or potion!");
+				System.out.println("Choose valid direction!");
 		} while(possibleDir.indexOf(dir) < 0);
 		
 		int pendingCoordChange = -1;
@@ -143,6 +145,11 @@ public class Dungeon
 		{
 			pendingCoordChange = xpos + 1;
 			changeXPos = true;
+		}
+		else if(possibleDir.indexOf(dir) == 4)
+		{	
+			menuRequest = true;
+			return false;
 		}
 		
 		if(pendingCoordChange < 0 || pendingCoordChange >= dim)
