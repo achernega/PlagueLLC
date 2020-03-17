@@ -20,6 +20,7 @@ public class TEMP_Tester
 	private static void playGame()
 	{
 		GameSetup game = new GameSetup();
+		System.out.println(game.hero.getName() +" has been randomly placed in the Virus Dungeon.");
 		Scanner kb = new Scanner(System.in);
 		do
 		{			
@@ -35,22 +36,6 @@ public class TEMP_Tester
 					moved = game.dungeon.move();
 			}
 			game.hero.update(game.dungeon);
-			if(game.dungeon.currentRoom().monster)
-			{
-				System.out.println("Want to flee? y/n");
-				String fleeChoice = kb.nextLine();
-				if(fleeChoice.toLowerCase().equals("y"))
-					System.out.println(game.hero.getName() + " fleed the battle!");
-				else
-				{
-					game.battle();
-					game.dungeon.currentRoom().monster = false;
-					System.out.println("Monster dropped a healing and vision potions!");
-					game.hero.numHealingPots++;
-					game.hero.numVisionPots++;
-					System.out.println(game.dungeon.currentRoom());
-				}
-			}
 		} while(game.hero.isAlive());
 	}
 }

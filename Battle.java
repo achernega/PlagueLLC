@@ -1,5 +1,7 @@
 package dungeon;
 
+import java.util.Scanner;
+
 public class Battle
 {
 	Hero hero;
@@ -21,6 +23,11 @@ public class Battle
 			//monster's turn (provided it's still alive!)
 			if (monster.isAlive())
 				monster.attack(hero);
+
+			//let the player bail out if desired
+			System.out.print("\n-->q to quit, anything else to continue: ");
+			Scanner kb = new Scanner(System.in);
+			pause = kb.next().charAt(0);
 
 		}//end battle loop
 

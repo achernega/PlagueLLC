@@ -1,12 +1,11 @@
 package dungeon;
 
 import java.util.Random;
-import java.util.Scanner;
 
 public abstract class Hero extends DungeonCharacter
 {
 	private double chanceToBlock;
-	public int numTurns, numHealingPots = 0, numVisionPots = 0, numPillars = 0;
+	private int numTurns, numHealingPots = 0, numVisionPots = 0, numPillars = 0;
 	private SpecialPower specialPower;
 
 	public Hero(String name, int hitPoints, int attackSpeed,
@@ -15,7 +14,7 @@ public abstract class Hero extends DungeonCharacter
 	{
 		super(name, hitPoints, attackSpeed, chanceToHit, damageMin, damageMax);
 		this.chanceToBlock = chanceToBlock;
-		readName();
+		setName(name);
 	}
 
 	public void update(Dungeon dungeon)
@@ -36,11 +35,6 @@ public abstract class Hero extends DungeonCharacter
 					{
 						System.out.println(getName() + " found a First Aid Kit of OO!");
 						numPillars++;
-						if(numPillars >= 4)
-						{
-							System.out.println("Congratulations! You have found every First Aid Kid of OO!");
-							triggerEnd();
-						}
 						room.essentials = "";
 						room.roomArray[1][1] = "+";
 						foundPillar = true;
@@ -109,19 +103,15 @@ public abstract class Hero extends DungeonCharacter
 		{
 			room.roomArray[1][1] = "X";
 			System.out.println(dungeon.currentRoom());
+			// battle(); // FIX !!!!!!!!!!
+			room.monster = false;
 			room.roomArray[1][1] = "E";
 		}
 		else
 			System.out.println(dungeon.currentRoom());
 	}
 	
-	public void readName()
-	{
-		System.out.println("Enter character name: ");
-		Scanner kb = new Scanner(System.in);
-		String nam = kb.nextLine();
-		setName(nam);
-	}//end readName method
+
 
 	public void usePower()
 	{

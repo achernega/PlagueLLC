@@ -8,6 +8,7 @@ public class GameSetup
 	
 	public GameSetup()
 	{
+		rules();
 		hero = chooseHero();
 		dungeon = new Dungeon(5);
 	}
@@ -18,71 +19,46 @@ public class GameSetup
 		Scanner kb = new Scanner(System.in);
 
 		System.out.println("Choose a hero:\n" +
-				"1. Warrior\n" +
-				"2. Sorceress\n" +
-				"3. Thief");
+				"1. Vac Scene\n" +
+				"2. Dr. Doctor\n" +
+				"3. Ty Lenol\n" + 
+				"4. Vicks Quill\n" +
+				"5. Vitman See");
 		choice = kb.nextInt();
 
 		switch(choice)
 		{
-			case 1: return hf.createHero("Warrior");
-	
-			case 2: return hf.createHero("Sorceress");
-	
-			case 3: return hf.createHero("Thief");
-	
-			default: System.out.println("invalid choice, returning Thief");
-			return hf.createHero("Thief");
+		case 1: return hf.createHero("VacScene");
+
+		case 2: return hf.createHero("Doctor");
+
+		case 3: return hf.createHero("TyLenol");
+		
+		case 4: return hf.createHero("Vicks");
+		
+		case 5: return hf.createHero("VitmanSee");
+
+		default: System.out.println("invalid choice, returning Dr. Doctor");
+		return hf.createHero("Doctor");
+		
 		}
+		
 	}
 	
-	public Monster spawnMonster()
-	{
-		MonsterFactory mf = new MonsterFactory();
-		int choice = (int)(Math.random() * 3) + 1;
+	public void rules() {
+		System.out.println("Welcome to the Virus Dungeon!" + 
+				"\nThe dreaded Code Smell Virus is spreading rapidly throughout the world and citizens are in a panic." +
+				"\nThe only thing that can save man-kind are the Four First Aid Kits of OO. " +
+				"\nUnfortunately, 5 of the worst diseases/viruses in the world have hidden them in their Dungeon." + 
+				"\nThe CDC needs your help to retrieve them so the world can survive." +
+				"\nNavigate your way through the maze as a daring Virus Fighter and eliminate any diseases that try and infect you." +
+				"\nCollect healing potions to increase health and keep yourself ready for battle." +
+				"\nFind vision potions to see into surrounding rooms and be sure to not fall into any pits the diseases have dug!" +
+				"\nUse the WASD keys to move around the maze and press E to see the menu at anytime." +
+				"\nGood luck, the well-being of the world is in your hands." +
+				"\n");
 
-		switch(choice)
-		{
-			case 1: return mf.createMonster("Ogre");
-	
-			case 2: return mf.createMonster("Gremlin");
-	
-			case 3: return mf.createMonster("Skeleton");
-	
-			default:
-				System.out.println("invalid choice, returning Skeleton");
-				return mf.createMonster("Skeleton");
-		}
 	}
-	
-	public void battle()
-	{
-		Monster monster = spawnMonster();
-				
-		char pause = 'p';
-		System.out.println(hero.getName() + " battles "
-				+ monster.getName()
-				+ "\n---------------------------------------------");
-
-		//do battle
-		while (hero.isAlive() && monster.isAlive() && pause != 'q')
-		{
-			//hero goes first
-			hero.battleChoices(monster);
-
-			//monster's turn (provided it's still alive!)
-			if (monster.isAlive())
-				monster.attack(hero);
-
-		}//end battle loop
-
-		if (!monster.isAlive())
-			System.out.println(hero.getName() + " was victorious!");
-		else if (!hero.isAlive())
-			System.out.println(hero.getName() + " was defeated :-(");
-		else//both are alive so user quit the game
-			System.out.println("Quitters never win ;-)");
-	}//end battle method
 	
 	public void menu()
 	{
