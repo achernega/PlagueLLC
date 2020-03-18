@@ -18,7 +18,7 @@ public class VacScene extends Hero
 		do
 		{
 		    System.out.println("1. Attack Opponent"
-		    		+ "\n2. Crushing Blow on Opponent");
+		    		+ "\n2. Vaccinate Disease");
 		    System.out.print("Choose an option: ");
 		    
 		    try
@@ -37,7 +37,7 @@ public class VacScene extends Hero
 			    		getAttack().useAttack();
 			        break;
 			    case 2:
-			    	setAttack(new CrushingBlow(opponent, this));
+			    	setAttack(new CrushingVaccination(opponent, this));
 			    	getAttack().useAttack();
 			        break;
 			    default:

@@ -98,7 +98,7 @@ public class GameSetup
 		if (!monster.isAlive())
 			System.out.println(hero.getName() + " was victorious!");
 		else if (!hero.isAlive())
-			System.out.println(hero.getName() + " was defeated :-(");
+			System.out.println("Mission failed; we'll get 'em next time.");
 		else//both are alive so user quit the game
 			System.out.println("Quitters never win ;-)");
 	}//end battle method

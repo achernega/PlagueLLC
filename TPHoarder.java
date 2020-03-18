@@ -20,7 +20,7 @@ public class TPHoarder extends Hero
 		do
 		{
 		    System.out.println("1. Attack Opponent"
-		    		+ "\n2. Increase Hit Points");
+		    		+ "\n2. Wipe Butt With Toiler Paper");
 		    System.out.print("Choose an option: ");
 		    
 		    try

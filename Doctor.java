@@ -17,7 +17,7 @@ public class Doctor extends Hero
 		do
 		{
 			System.out.println("1. Attack Opponent"
-		    		+ "\n2. Surprise Attack");
+		    		+ "\n2. Anesthetize and Punch");
 		    System.out.print("Choose an option: ");
 		    
 		    try
@@ -36,7 +36,7 @@ public class Doctor extends Hero
 			    		getAttack().useAttack();
 			        break;
 			    case 2:
-			    	setAttack(new SurpriseAttack(opponent, this));
+			    	setAttack(new AnesthesiaAttack(opponent, this));
 			    	getAttack().useAttack();
 			        break;
 			    default:

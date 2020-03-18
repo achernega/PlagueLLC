@@ -20,7 +20,7 @@ public class Vicks extends Hero
 		do
 		{
 		    System.out.println("1. Attack Opponent"
-		    		+ "\n2. Increase Hit Points");
+		    		+ "\n2. Take DayQuil");
 		    System.out.print("Choose an option: ");
 		    
 		    try

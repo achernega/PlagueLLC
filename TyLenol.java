@@ -21,7 +21,7 @@ public class TyLenol extends Hero
 		do
 		{
 		    System.out.println("1. Attack Opponent"
-		    		+ "\n2. Increase Hit Points");
+		    		+ "\n2. Snort Tylenol");
 		    System.out.print("Choose an option: ");
 		    
 		    try
