@@ -11,13 +11,17 @@ Contributions:
   -> Created black box method to populate rooms with necc. objects; calls room white box classes.
   -> Designed method of movement that tracks location through dungeon.
   -> Created method to build string of entire dungeon.
-  -> Created method to build patial string for vision pot usage,
+  -> Added full vision potion functionality.
 3. Built Hero class to interact with dungeon and rooms //achernega
   -> Created large update method that updates every parameter when hero enters new room.
   -> Healing potion functionality added.
 4. Built gamesetup class and main method to facilitate actual gameplay //achernega
   -> In-game player menu added with full funtionality.
 5. Build DungeonAdventure class playGame() method //achernega
-6. Added new fields and toString method to hero class //mtaylor pending
-7. Create two new heroes and monsters //mtaylor pending
-8. Game introduction and how to play //mtaylor pending
+6. Added characters: Dr. Doctor, Vac Scene, TPHoarder, Scurvy //achernega
+7. Added characters: Vicks Quill, Ty Lenol, Sniffles //mtaylor
+8. Added characters: Black Death, Spanish Flu, Covid19 //jbrown
+9. Added new fields and toString method to hero class //mtaylor pending
+10. Game introduction and how to play //mtaylor pending
+11. Strategy pattern for Special Attacks //achernega
+12. Strategy+Flyweight for reglar attacks //mtaylor
