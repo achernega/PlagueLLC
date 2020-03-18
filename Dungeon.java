@@ -15,8 +15,8 @@ public class Dungeon
 	public Dungeon(int x)
 	{
 		dim = x;
-		dungeon = buildDungeonGUI(); // Parameters are dimensions of dungeon
 		rooms = buildRoomMatrix();
+		dungeon = buildDungeonGUI(); // Parameters are dimensions of dungeon
 	}
 	
 	private char[][] buildDungeonGUI()
@@ -43,6 +43,12 @@ public class Dungeon
 				charD[i][j] = '|';
 				charD[j][i] = '-';
 				charD[j][i+1] = '*';
+			}
+		
+		for(int i=0; i<5; i++)
+			for(int j=0; j<5; j++)
+			{
+				charD[2*i+1][2*j+1] = (rooms[i][j].roomArray[1][1]).toCharArray()[0];
 			}
 		
 		return charD;
@@ -72,7 +78,7 @@ public class Dungeon
 				rooms[i][j] = new Room("N,E,S,W");
 		
 		// Following code populates rooms with essential objects
-		String[] essentialObjects = {"I", "O", "P1", "P2", "P3", "P4"};
+		String[] essentialObjects = {"I", "O", "+", "+", "+", "+"};
 		ArrayList<String> takenSpots = new ArrayList<String>();
 		
 		boolean next = false;
@@ -88,6 +94,7 @@ public class Dungeon
 				{
 					rooms[yrand][xrand].essentials = rooms[yrand][xrand].essentials + "," + s;
 					takenSpots.add(yrand + "," + xrand);
+					rooms[yrand][xrand].roomArray[1][1] = s;
 					next = true;
 					
 					// This triggers when setting entrance to set initial player position
@@ -108,7 +115,18 @@ public class Dungeon
 				{
 					rooms[i][j].setNonEssentials();
 					if(rooms[i][j].nonessentials.length() < 1) // Checks after non-essentials populated
+					{
 						rooms[i][j].setMonster();
+						if(rooms[i][j].monster)
+							rooms[i][j].roomArray[1][1] = "X";
+					}
+					else
+					{
+						if(rooms[i][j].nonessentials.length() > 2)
+							rooms[i][j].roomArray[1][1] = "M";
+						else
+							rooms[i][j].roomArray[1][1] = rooms[i][j].nonessentials.split(",")[1];
+					}
 				}
 			}
 		
@@ -167,6 +185,21 @@ public class Dungeon
 		return true;
 	}
 	
+	public void useVisionPot()
+	{
+		for(int i=2*(ypos-1); i<2*(ypos-1)+7; i++)
+			{
+				for(int j=2*(xpos-1); j<2*(xpos-1)+7; j++)
+				{
+					if(i > -1 && i < dim*2+1 && j > -1 && j < dim*2+1)
+						System.out.print(dungeon[i][j]);
+					else
+						System.out.print(" ");
+				}
+				System.out.println();
+			}
+	}
+	
 	public Room currentRoom()
 	{
 		return rooms[ypos][xpos];
@@ -174,6 +207,7 @@ public class Dungeon
 	
 	public String toString()
 	{
+		dungeon = buildDungeonGUI();
 		String s = "";
 		for(int i=0; i<(dim*2 + 1); i++) {
 			for(int j=0; j<(dim*2 + 1); j++)

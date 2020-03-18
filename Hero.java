@@ -31,7 +31,7 @@ public abstract class Hero extends DungeonCharacter
 			{
 				for(String s : essArr)
 				{
-					if(s.equals("P1") || s.equals("P2") || s.equals("P3") || s.equals("P4"))
+					if(s.equals("+"))
 					{
 						System.out.println(getName() + " found a First Aid Kit of OO!");
 						numPillars++;
@@ -136,19 +136,6 @@ public abstract class Hero extends DungeonCharacter
 		}
 		else
 			System.out.println("No healing potions left!");
-	}
-	
-	public void useVisionPot()
-	{
-		if(numVisionPots > 0)
-		{
-			Random r = new Random();
-			System.out.println(getName() + " used a vision potion!");
-			// FIX: put in vision potion implementation
-			numVisionPots--;
-		}
-		else
-			System.out.println("No vision potions left!");
 	}
 
 	public boolean defend()

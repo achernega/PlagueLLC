@@ -54,7 +54,7 @@ public class VacScene extends Hero
 			if (getNumTurns() > 0)
 			    System.out.println("Number of turns remaining is: " + getNumTurns());
 
-		} while(getNumTurns() > 0);
+		} while(getNumTurns() > 0 && getHitPoints() > 0 && opponent.getHitPoints() > 0);
     }//end battleChoices method
 
 }//end Hero class

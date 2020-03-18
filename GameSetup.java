@@ -1,4 +1,5 @@
 package dungeon;
+import java.util.Random;
 import java.util.Scanner;
 
 public class GameSetup
@@ -36,7 +37,7 @@ public class GameSetup
 			case 3: System.out.println("Mr. Doctor gets a medical degree and becomes Dr. Doctor!\n");
 				return hf.createHero("Doctor");
 			
-			case 4: System.out.println("Ty Lenol is ready to relieve pain destroy livers!\n");
+			case 4: System.out.println("Ty Lenol is ready to relieve pains and destroy livers!\n");
 				return hf.createHero("TyLenol");
 			
 			case 5: System.out.println("Toiler Paper Hoarder kisses his cousin-wife goodbye and heads off to battle!\n");
@@ -74,13 +75,12 @@ public class GameSetup
 	{
 		Monster monster = spawnMonster();
 				
-		char pause = 'p';
 		System.out.println(hero.getName() + " battles "
 				+ monster.getName()
 				+ "\n---------------------------------------------");
 
 		//do battle
-		while (hero.isAlive() && monster.isAlive() && pause != 'q')
+		while (hero.isAlive() && monster.isAlive())
 		{
 			//hero goes first
 			hero.battleChoices(monster);
@@ -111,13 +111,14 @@ public class GameSetup
 					+ "2) Use Healing Potion\n"
 					+ "3) Use Vision Potion\n"
 					+ "4) Exit Menu\n"
+					+ "5) <For Devs Only> Print Entire Dungeon\n"
 					+ "0) Quit Game");
 			do
 			{
 				choice = kb.nextInt();
-				if(choice < 0 || choice > 4)
+				if(choice < 0 || choice > 5)
 					System.out.println("Chooce valid option!");
-			} while(choice < 0 || choice > 4);
+			} while(choice < 0 || choice > 5);
 			
 			switch(choice)
 			{
@@ -125,13 +126,28 @@ public class GameSetup
 				
 				case 2 : hero.useHealingPot(); break;
 				
-				case 3 : hero.useVisionPot(); break;
+				case 3 : useVisionPot(); break;
 				
 				case 4 : break;
+				
+				case 5 : System.out.println(dungeon); break;
 				
 				case 0: hero.triggerEnd(); break;
 			}
 			
 		} while(choice != 4);
+	}
+	
+	public void useVisionPot()
+	{
+		if(hero.numVisionPots > 0)
+		{
+			Random r = new Random();
+			System.out.println(hero.getName() + " used a vision potion!");
+			hero.numVisionPots--;
+			dungeon.useVisionPot();
+		}
+		else
+			System.out.println("No vision potions left!");
 	}
 }

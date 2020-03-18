@@ -31,6 +31,7 @@ public class TEMP_Tester
 				{
 					game.menu();
 					game.dungeon.menuRequest = false;
+					System.out.println(game.dungeon.currentRoom());
 				}
 				else
 					moved = game.dungeon.move();
@@ -38,13 +39,17 @@ public class TEMP_Tester
 			game.hero.update(game.dungeon);
 			if(game.dungeon.currentRoom().monster)
 			{
-				System.out.println("You have encountered a desease!\nWant to battle? y/n");
+				System.out.println("You have encountered a disease!\nWant to battle? y/n");
 				String fleeChoice = kb.nextLine();
 				if(fleeChoice.toLowerCase().equals("n"))
+				{
 					System.out.println(game.hero.getName() + " fleed the battle!");
+					System.out.println(game.dungeon.currentRoom());
+				}
 				else
 				{
 					game.battle();
+					game.hero.setNumTurns(2);
 					game.dungeon.currentRoom().monster = false;
 					System.out.println("Monster dropped a healing and vision potions!");
 					game.hero.numHealingPots++;
