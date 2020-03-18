@@ -24,4 +24,4 @@ Contributions:
 9. Added new fields and toString method to hero class //mtaylor pending
 10. Game introduction and how to play //mtaylor pending
 11. Strategy pattern for Special Attacks //achernega
-12. Strategy+Flyweight for reglar attacks //mtaylor
+12. Strategy pattern for regular attacks //mtaylor
