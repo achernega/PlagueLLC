@@ -9,11 +9,4 @@ public class SpanishFlu extends Monster
 
     }//end constructor
     
-	public void attack(DungeonCharacter opponent)
-	{
-		System.out.println(getName() + " tries to infect " +
-							opponent.getName() + " with a fever and body aches:");
-		super.attack(opponent);
-
-	}//end override of attack
 }//end Monster class

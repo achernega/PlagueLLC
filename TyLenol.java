@@ -11,12 +11,6 @@ public class TyLenol extends Hero
 		super("Ty Lenol", 90, 4, .7, 20, 45, .3);
     }//end constructor
 
-	public void attack(DungeonCharacter opponent)
-	{
-		System.out.println(getName() + " tries to lower temperature and ruin the liver of " +
-							opponent.getName() + ":");
-		super.attack(opponent);
-	}//end override of attack method
 
     public void battleChoices(DungeonCharacter opponent)
 	{
@@ -42,11 +36,12 @@ public class TyLenol extends Hero
 
 		    switch (choice)
 		    {
-			    case 1: attack(opponent);
+			    case 1: setAttack(new HeroAttack(opponent, this));
+			    		getAttack().useAttack();
 			        break;
 			    case 2:
-			    	setSpecialPower(new IncreaseHP(MAX_ADD, MIN_ADD, this));
-			    	getSpecialPower().usePower();
+			    	setAttack(new IncreaseHP(MAX_ADD, MIN_ADD, this));
+			    	getAttack().useAttack();
 			        break;
 			    default:
 			        System.out.println("invalid choice!");

@@ -4,6 +4,7 @@ public abstract class Monster extends DungeonCharacter
 {
 	protected double chanceToHeal;
 	protected int minHeal, maxHeal;
+	private Attack attack;
 
 	public Monster(String name, int hitPoints, int attackSpeed,
 			double chanceToHit, double chanceToHeal,
@@ -39,4 +40,19 @@ public abstract class Monster extends DungeonCharacter
 		super.subtractHitPoints(hitPoints);
 		heal();
 	}//end method
+	
+	public Attack getAttack()
+	{
+		return attack;
+	}
+
+	public void setAttack(Attack attack)
+	{
+		this.attack = attack;
+	}
+	
+	public void usePower()
+	{
+		attack.useAttack();
+	}
 }//end Monster class

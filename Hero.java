@@ -7,7 +7,7 @@ public abstract class Hero extends DungeonCharacter
 {
 	private double chanceToBlock;
 	public int numTurns, numHealingPots = 0, numVisionPots = 0, numPillars = 0;
-	private SpecialPower specialPower;
+	private Attack attack;
 
 	public Hero(String name, int hitPoints, int attackSpeed,
 			double chanceToHit, int damageMin, int damageMax,
@@ -117,9 +117,9 @@ public abstract class Hero extends DungeonCharacter
 			System.out.println(dungeon.currentRoom());
 	}
 
-	public void usePower()
+	public void useAttack()
 	{
-		specialPower.usePower();
+		attack.useAttack();
 	}
 	
 	public void useHealingPot()
@@ -179,14 +179,14 @@ public abstract class Hero extends DungeonCharacter
 		this.numTurns = numTurns;
 	}
 
-	public SpecialPower getSpecialPower()
+	public Attack getAttack()
 	{
-		return specialPower;
+		return attack;
 	}
 
-	public void setSpecialPower(SpecialPower specialPower)
+	public void setAttack(Attack attack)
 	{
-		this.specialPower = specialPower;
+		this.attack = attack;
 	}
 	
 	public String toString() {

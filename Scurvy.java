@@ -9,12 +9,4 @@ public class Scurvy extends Monster
 
     }//end constructor
 
-	public void attack(DungeonCharacter opponent)
-	{
-		System.out.println(getName() + " tries to make " +
-							opponent.getName() + "'s teeth fall out:");
-		super.attack(opponent);
-
-	}//end override of attack
-
 }

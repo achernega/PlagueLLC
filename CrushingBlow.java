@@ -1,6 +1,6 @@
 package dungeon;
 
-public class CrushingBlow implements SpecialPower
+public class CrushingBlow implements Attack
 {
 	private DungeonCharacter opponent;
 	private Hero thisChar;
@@ -12,7 +12,7 @@ public class CrushingBlow implements SpecialPower
 	}
 	
 	@Override
-	public void usePower()
+	public void useAttack()
 	{
 		if (Math.random() <= .4)
 		{

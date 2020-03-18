@@ -9,12 +9,4 @@ public class BlackDeath extends Monster
 
     }//end constructor
 
-	public void attack(DungeonCharacter opponent)
-	{
-		System.out.println(getName() + " tries to infect " +
-							opponent.getName() + " with extreme weakness and black fingers:");
-		super.attack(opponent);
-
-	}//end override of attack
-
 }

@@ -1,6 +1,6 @@
 package dungeon;
 
-public class IncreaseHP implements SpecialPower
+public class IncreaseHP implements Attack
 {
 	private int MAX_ADD, MIN_ADD;
 	private Hero thisChar;
@@ -13,7 +13,7 @@ public class IncreaseHP implements SpecialPower
 	}
 	
 	@Override
-	public void usePower()
+	public void useAttack()
 	{
 		int hPoints;
 		hPoints = (int)(Math.random() * (MAX_ADD - MIN_ADD + 1)) + MIN_ADD;

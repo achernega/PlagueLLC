@@ -87,7 +87,11 @@ public class GameSetup
 
 			//monster's turn (provided it's still alive!)
 			if (monster.isAlive())
-				monster.attack(hero);
+			{
+				monster.setAttack(new MonsterAttack(hero, monster));
+				monster.getAttack().useAttack();
+			}
+				//monster.attack(hero);
 
 		}//end battle loop
 

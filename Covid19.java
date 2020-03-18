@@ -9,12 +9,12 @@ public class Covid19 extends Monster
 
     }//end constructor
 
-	public void attack(DungeonCharacter opponent)
+	/*public void attack(DungeonCharacter opponent)
 	{
 		System.out.println(getName() + " tries to infect " +
 							opponent.getName() + " with a sore throat and cough. The economy is in shambles!");
 		super.attack(opponent);
 
 	}//end override of attack
-
+*/
 }//end class Gremlin

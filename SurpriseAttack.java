@@ -1,6 +1,6 @@
 package dungeon;
 
-public class SurpriseAttack implements SpecialPower
+public class SurpriseAttack implements Attack
 {
 	private DungeonCharacter opponent;
 	private Hero thisChar;
@@ -12,7 +12,7 @@ public class SurpriseAttack implements SpecialPower
 	}
 	
 	@Override
-	public void usePower()
+	public void useAttack()
 	{
 		double surprise = Math.random();
 		if (surprise <= .4)

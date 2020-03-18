@@ -11,13 +11,6 @@ public class TPHoarder extends Hero
 		super("Toilet Paper Hoarder", 75, 5, .7, 25, 50, .3);
     }//end constructor
 
-	public void attack(DungeonCharacter opponent)
-	{
-		System.out.println(getName() + " throws a roll of toiler paper at " +
-							opponent.getName() + ":");
-		super.attack(opponent);
-	}//end override of attack method
-
     public void battleChoices(DungeonCharacter opponent)
 	{
     	Scanner sc = new Scanner(System.in);
@@ -42,11 +35,12 @@ public class TPHoarder extends Hero
 
 		    switch (choice)
 		    {
-			    case 1: attack(opponent);
+			    case 1: setAttack(new HeroAttack(opponent, this));
+			    		getAttack().useAttack();
 			        break;
 			    case 2:
-			    	setSpecialPower(new IncreaseHP(MAX_ADD, MIN_ADD, this));
-			    	getSpecialPower().usePower();
+			    	setAttack(new IncreaseHP(MAX_ADD, MIN_ADD, this));
+			    	getAttack().useAttack();
 			        break;
 			    default:
 			        System.out.println("invalid choice!");

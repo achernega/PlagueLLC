@@ -32,11 +32,12 @@ public class Doctor extends Hero
 
 		    switch (choice)
 		    {
-			    case 1: attack(opponent);
+			    case 1: setAttack(new HeroAttack(opponent, this));
+			    		getAttack().useAttack();
 			        break;
 			    case 2:
-			    	setSpecialPower(new SurpriseAttack(opponent, this));
-			    	getSpecialPower().usePower();
+			    	setAttack(new SurpriseAttack(opponent, this));
+			    	getAttack().useAttack();
 			        break;
 			    default:
 			        System.out.println("invalid choice!");
