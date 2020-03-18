@@ -11,6 +11,9 @@ public abstract class DungeonCharacter
 	public DungeonCharacter(String name, int hitPoints, int attackSpeed,
 				     double chanceToHit, int damageMin, int damageMax)
 	{
+
+		if(hitPoints < 1 || attackSpeed < 0 || chanceToHit < 0 || damageMin < 0 || damageMax < damageMin)
+			throw new IllegalArgumentException("Paramaters passed in are outside opperating range");
 		this.name = name;
 		this.hitPoints = hitPoints;
 		this.attackSpeed = attackSpeed;
